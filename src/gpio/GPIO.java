@@ -90,6 +90,7 @@ public class GPIO {
             fileWriter.close();
         } catch (IOException e) {
             return -1;
+
         }
         return 1;
     }
