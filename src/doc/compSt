@@ -1,0 +1,12 @@
+#if! /bin/bash
+
+param="$1.java"
+mainDir="$2/$1"
+javac -classpath .:classes:/opt/pi4j/lib/'*' -d . ${param}
+if [ -z $2 ]
+then
+	java -classpath .:classes:/opt/pi4j/lib/'*' $1
+else
+	java -classpath .:classes:/opt/pi4j/lib/'*' ${mainDir}
+fi
+
