@@ -1,4 +1,4 @@
-package gpio;
+package driver;
 
 import java.io.*;
 
@@ -42,13 +42,13 @@ public class GPIO {
     }
 
     private void init() {
-        this.path = new File("/sys/class/gpio");
+        this.path = new File("/sys/class/bin");
         this.exportFile  = new File(this.path.getAbsolutePath() + "/export");
         this.unexportFile  = new File(this.path.getAbsolutePath() + "/unexport");
     }
     
     public int export() {
-        File gpioFile = new File(this.path.getAbsolutePath() + "/gpio" + String.valueOf(this.pin));
+        File gpioFile = new File(this.path.getAbsolutePath() + "/bin" + String.valueOf(this.pin));
         if(this.pin != -1 && !this.typ.trim().isEmpty() && !gpioFile.exists()) {
             try {
                 FileWriter fileWriter = new FileWriter(this.exportFile, true);
@@ -97,7 +97,7 @@ public class GPIO {
 
     public int isHigh() {
         if(this.pin != -1) {
-           File value = new File(this.path.getAbsolutePath() + "/gpio" + this.pin + "/value");
+           File value = new File(this.path.getAbsolutePath() + "/bin" + this.pin + "/value");
            try {
                BufferedReader bufferedReader = new BufferedReader(new FileReader(value));
                String code = bufferedReader.readLine();
@@ -113,7 +113,7 @@ public class GPIO {
 
     public int setValue(int code) {
         if(this.pin != -1) {
-            File value = new File(this.path.getAbsolutePath() + "/gpio" + this.pin + "/value");
+            File value = new File(this.path.getAbsolutePath() + "/bin" + this.pin + "/value");
             try {
                 FileWriter fileWriter = new FileWriter(value);
                 if(code == GPIO.HIGH_CODE || code == GPIO.LOW_CODE) {
