@@ -8,7 +8,20 @@ public class DB {
     private Statement mStatement;
     private String mDriver;
     private String mUrl;
+    private String mDelimiter = "\\|";
     private boolean isConnected;
+    private static DB instance = null;
+
+    public static void init(DB db) {
+        DB.instance = db;
+    }
+
+    public static DB getInstance () {
+        if (DB.instance == null) {
+            throw new NullPointerException("Instance is null");
+        }
+        return DB.instance;
+    }
 
     public DB(String serverName, String user, String password, String port, String databaseName) {
         this.isConnected = false;
@@ -37,7 +50,7 @@ public class DB {
     private String createQuery(String query, String[] args) {
         if(args.length > 0) {
             char[] queryCharAr = query.toCharArray();
-            String[] queryStringAr = query.split("\\|");
+            String[] queryStringAr = query.split(this.mDelimiter);
             String finalQuery = null;
             int count = 0;
 
