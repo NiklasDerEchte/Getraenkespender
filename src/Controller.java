@@ -8,8 +8,6 @@ public class Controller {
         new Model();
         this.mShutdownThread = new Thread(new ShutdownThread());
         Runtime.getRuntime().addShutdownHook(this.mShutdownThread);
-
-
     }
 
     public static void main(String[] args) {

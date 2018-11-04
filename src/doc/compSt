@@ -1,4 +1,4 @@
-#if! /bin/bash
+#! /bin/bash
 
 param="$1.java"
 mainDir="$2/$1"

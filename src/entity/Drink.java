@@ -4,11 +4,20 @@ public class Drink {
     private int id;
     private String name;
     private String description;
-    private float pos1;
-    private float pos2;
-    private float pos3;
-    private float pos4;
-    private float pos5;
+    private float ingCl1;
+    private float ingCl2;
+    private float ingCl3;
+    private float ingCl4;
+    private float ingCl5;
+    private int ingFk;
+
+    public int getIngFk() {
+        return ingFk;
+    }
+
+    public void setIngFk(int ingFk) {
+        this.ingFk = ingFk;
+    }
 
     public int getId() {
         return id;
@@ -34,47 +43,47 @@ public class Drink {
         this.description = description;
     }
 
-    public float getPos1() {
-        return pos1;
+    public float getingCl1() {
+        return ingCl1;
     }
 
-    public void setPos1(float pos1) {
-        this.pos1 = pos1;
+    public void setingCl1(float ingCl1) {
+        this.ingCl1 = ingCl1;
     }
 
-    public float getPos2() {
-        return pos2;
+    public float getingCl2() {
+        return ingCl2;
     }
 
-    public void setPos2(float pos2) {
-        this.pos2 = pos2;
+    public void setingCl2(float ingCl2) {
+        this.ingCl2 = ingCl2;
     }
 
-    public float getPos3() {
-        return pos3;
+    public float getingCl3() {
+        return ingCl3;
     }
 
-    public void setPos3(float pos3) {
-        this.pos3 = pos3;
+    public void setingCl3(float ingCl3) {
+        this.ingCl3 = ingCl3;
     }
 
-    public float getPos4() {
-        return pos4;
+    public float getingCl4() {
+        return ingCl4;
     }
 
-    public void setPos4(float pos4) {
-        this.pos4 = pos4;
+    public void setingCl4(float ingCl4) {
+        this.ingCl4 = ingCl4;
     }
 
-    public float getPos5() {
-        return pos5;
+    public float getingCl5() {
+        return ingCl5;
     }
 
-    public void setPos5(float pos5) {
-        this.pos5 = pos5;
+    public void setingCl5(float ingCl5) {
+        this.ingCl5 = ingCl5;
     }
 
-    public float[] getPosArray() {
-        return new float[]{getPos1(), getPos2(), getPos3(), getPos4(), getPos5()};
+    public float[] getingClArray() {
+        return new float[]{getingCl1(), getingCl2(), getingCl3(), getingCl4(), getingCl5()};
     }
 }

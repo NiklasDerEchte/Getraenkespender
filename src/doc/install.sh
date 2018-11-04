@@ -23,5 +23,6 @@ sudo mv mysql-connector.jar /opt
 
 #activate I2C in "sudo raspi-config" and check with "sudo i2cdetect -y 1" or "sudo i2cdetect -y 0" if 0x27 is activated
 printf "dtparam=i2c_arm=1\n" >> /boot/config.txt
+echo "Beliebige Taste drücken:"
 read -n1 -s
 sudo reboot
