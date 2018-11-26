@@ -55,7 +55,7 @@ public class DB {
             int count = 0;
 
             for(char queryChar : queryCharAr) {
-                if(queryChar == '|') {
+                if(queryChar == this.mDelimiter) {
                     count++;
                 }
             }
