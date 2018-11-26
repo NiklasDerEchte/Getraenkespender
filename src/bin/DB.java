@@ -72,6 +72,6 @@ public class DB {
     }
 
     public boolean isConnected() {
-        return isConnected;
+        return this.isConnected;
     }
 }
