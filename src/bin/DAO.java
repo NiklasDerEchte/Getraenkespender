@@ -2,28 +2,28 @@ package bin;
 
 import java.sql.*;
 
-public class DB {
+public class DAO {
 
     private Connection mConnection;
     private Statement mStatement;
     private String mDriver;
     private String mUrl;
-    private String mDelimiter = "\\|";
+    private char mDelimiter = ':';
     private boolean isConnected;
-    private static DB instance = null;
+    private static DAO instance = null;
 
-    public static void init(DB db) {
-        DB.instance = db;
+    public static void init(DAO dao) {
+        DAO.instance = dao;
     }
 
-    public static DB getInstance () {
-        if (DB.instance == null) {
+    public static DAO getInstance () {
+        if (DAO.instance == null) {
             throw new NullPointerException("Instance is null");
         }
-        return DB.instance;
+        return DAO.instance;
     }
 
-    public DB(String serverName, String user, String password, String port, String databaseName) {
+    public DAO(String serverName, String user, String password, String port, String databaseName) {
         this.isConnected = false;
         this.mDriver = "com.mysql.jdbc.Driver";
         this.mUrl = "jdbc:mysql://" + serverName + ":" + port + "/" + databaseName + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -50,7 +50,7 @@ public class DB {
     private String createQuery(String query, String[] args) {
         if(args.length > 0) {
             char[] queryCharAr = query.toCharArray();
-            String[] queryStringAr = query.split(this.mDelimiter);
+            String[] queryStringAr = query.split(String.valueOf(this.mDelimiter));
             String finalQuery = null;
             int count = 0;
 

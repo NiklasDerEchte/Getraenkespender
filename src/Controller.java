@@ -1,3 +1,4 @@
+import bin.GUI;
 import thread.ShutdownThread;
 
 public class Controller {
@@ -8,6 +9,10 @@ public class Controller {
         new Model();
         this.mShutdownThread = new Thread(new ShutdownThread());
         Runtime.getRuntime().addShutdownHook(this.mShutdownThread);
+
+        GUI gui = new GUI();
+        gui.printMessage("Hallo");
+        gui.printSubmessage("Welt");
     }
 
     public static void main(String[] args) {

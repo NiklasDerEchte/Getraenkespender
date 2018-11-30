@@ -1,7 +1,7 @@
-import bin.DB;
+import bin.DAO;
 
 public class Model {
     public Model () {
-        DB.init(new DB("localhost", "pi", "nikeneo", "3306", "getraenkespender"));
+        DAO.init(new DAO("localhost", "pi", "nikeneo", "3306", "getraenkespender"));
     }
 }

@@ -6,7 +6,7 @@ import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
 
-public class LCD1602 {
+public class LCD {
 
     private static final int LCD_CLEARDISPLAY = 0x01;
     private static final int LCD_RETURNHOME = 0x02;
@@ -52,7 +52,7 @@ public class LCD1602 {
 
     private I2CDevice device;
 
-    public LCD1602(int i2cAddress, int col, int row) throws IOException {
+    public LCD(int i2cAddress, int col, int row) throws IOException {
         try {
             device = I2CFactory.getInstance(I2CBus.BUS_1).getDevice(i2cAddress);
             init(col, row, LCD_5x8DOTS);
