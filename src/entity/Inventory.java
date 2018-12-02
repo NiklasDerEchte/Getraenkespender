@@ -3,7 +3,7 @@ package entity;
 public class Inventory {
     private int id;
     private int position;
-    private long ean;
+    private String ean;
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class Inventory {
         this.position = position;
     }
 
-    public long getEan() {
+    public String getEan() {
         return ean;
     }
 
-    public void setEan(long ean) {
+    public void setEan(String ean) {
         this.ean = ean;
     }
 }

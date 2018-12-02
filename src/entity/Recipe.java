@@ -3,7 +3,7 @@ package entity;
 public class Recipe {
     private int id;
     private int drinkFk;
-    private long ean;
+    private String ean;
     private float columeCl;
 
     public int getId() {
@@ -22,11 +22,11 @@ public class Recipe {
         this.drinkFk = drinkFk;
     }
 
-    public long getEan() {
+    public String getEan() {
         return ean;
     }
 
-    public void setEan(long ean) {
+    public void setEan(String ean) {
         this.ean = ean;
     }
 

@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Web\\": "src/"
+        }
+    },
+    "require": {
+        "niklasdao/niklasdao": "^1.0"
+    }
+}

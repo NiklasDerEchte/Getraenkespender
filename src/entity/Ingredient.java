@@ -2,7 +2,7 @@ package entity;
 
 public class Ingredient {
     private int id;
-    private long ean;
+    private String ean;
     private String name;
 
     public int getId() {
@@ -13,11 +13,11 @@ public class Ingredient {
         this.id = id;
     }
 
-    public long getEan() {
+    public String getEan() {
         return ean;
     }
 
-    public void setEan(long ean) {
+    public void setEan(String ean) {
         this.ean = ean;
     }
 
