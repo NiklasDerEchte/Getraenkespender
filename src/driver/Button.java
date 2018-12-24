@@ -11,7 +11,7 @@ public class Button {
         this.mGpioController = GpioFactory.getInstance();
         this.mGpioPin = mGpioController.provisionDigitalInputPin(pin, name, PinPullResistance.PULL_DOWN);
         this.mGpioPin.setShutdownOptions(true);
-        this.mGpioPin.setDebounce(200);
+        this.mGpioPin.setDebounce(250);
         this.mGpioPin.addListener(listener);
     }
 

@@ -9,27 +9,33 @@ import java.util.Vector;
 public class Controller {
 
     private Thread mShutdownThread;
+    private GUI mLCDGui;
+    private Model mModel;
+    private Menu mMenu;
 
     public Controller() {
-        new Model();
+        this.mModel = new Model();
+        this.mLCDGui = new GUI();
+        this.mMenu = new Menu(this.mLCDGui);
         this.mShutdownThread = new Thread(new ShutdownThread());
         Runtime.getRuntime().addShutdownHook(this.mShutdownThread);
 
-        GUI gui = new GUI();
-        gui.printMessage("Hallo");
-        gui.printSubmessage("Welt");
-
-        Data.CUSTOM_DRINK_MENU_VECTOR = new Vector<>();
-        for(int x = 0; x < 10; x++) {
-            CustomDrink customDrink = new CustomDrink();
-            customDrink.setId(x);
-            customDrink.setName("Hallo " + x);
-            Data.CUSTOM_DRINK_MENU_VECTOR.add(customDrink);
+        if(this.mModel.inventoryExists()) {
+            this.mLCDGui.printMessage("Es wurde ein");
+            this.mLCDGui.printSubmessage("Inventar gefunden");
         }
-        new Menu();
+
+
+
+
+
+
+
+
+
         while(true) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

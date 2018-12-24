@@ -53,4 +53,22 @@ public class GUI {
             }
         }
     }
+
+    public void printNextOkMenu() {
+        if(this.mLCD1602 != null) {
+            try {
+                this.mLCD1602.setCursorPosition(0,1);
+                this.mLCD1602.print("                ");
+                this.mLCD1602.setCursorPosition(0,1);
+                this.mLCD1602.print("<- Weiter  OK ->");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void printDrink(String drinkName) {
+        this.printMessage(drinkName);
+        this.printNextOkMenu();
+    }
 }
