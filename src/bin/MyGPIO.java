@@ -1,8 +1,8 @@
-package driver;
+package bin;
 
 import java.io.*;
 
-public class GPIO {
+public class MyGPIO {
 
     public static String OUT = "out";
     public static String IN = "in";
@@ -18,16 +18,16 @@ public class GPIO {
     private File exportFile;
     private File unexportFile;
 
-    public GPIO() {
+    public MyGPIO() {
         this.init();
     }
 
-    public GPIO(int pin) {
+    public MyGPIO(int pin) {
         this.pin = pin;
         this.init();
     }
 
-    public GPIO(int pin, String typ) {
+    public MyGPIO(int pin, String typ) {
         this.pin = pin;
         this.typ = typ;
         this.init();
@@ -90,7 +90,6 @@ public class GPIO {
             fileWriter.close();
         } catch (IOException e) {
             return -1;
-
         }
         return 1;
     }
@@ -116,7 +115,7 @@ public class GPIO {
             File value = new File(this.path.getAbsolutePath() + "/bin" + this.pin + "/value");
             try {
                 FileWriter fileWriter = new FileWriter(value);
-                if(code == GPIO.HIGH_CODE || code == GPIO.LOW_CODE) {
+                if(code == MyGPIO.HIGH_CODE || code == MyGPIO.LOW_CODE) {
                     fileWriter.write(String.valueOf(code));
                     fileWriter.flush();
                     fileWriter.close();

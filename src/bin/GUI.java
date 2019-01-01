@@ -1,7 +1,5 @@
 package bin;
 
-import driver.LCD;
-
 import java.io.IOException;
 
 public class GUI {
