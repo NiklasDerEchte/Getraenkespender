@@ -47,6 +47,15 @@ public class DAO {
         return null;
     }
 
+    public void update(String query, String[] args) {
+        query = this.createQuery(query, args);
+        try {
+            this.mStatement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String createQuery(String query, String[] args) {
         if(args.length > 0) {
             char[] queryCharAr = query.toCharArray();

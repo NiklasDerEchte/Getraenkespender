@@ -11,10 +11,17 @@ public class Model {
         ResultSet rs = dao.query("SELECT * FROM :", new String[]{"Inventory"});
         int size = 0;
         try {
-            size = rs.getFetchSize();
+            while(rs.next()) {
+                size++;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return size != 0;
+    }
+
+    public void clearTable(String table) {
+        DAO dao = DAO.getInstance();
+        dao.update("DELETE FROM :", new String[]{table});
     }
 }
