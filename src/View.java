@@ -1,12 +1,12 @@
-package bin;
+import resources.LCD;
 
 import java.io.IOException;
 
-public class GUI {
+public class View {
 
     private LCD mLCD1602;
 
-    public GUI() {
+    public View() {
         this.init();
     }
 

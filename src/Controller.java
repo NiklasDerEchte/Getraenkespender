@@ -1,43 +1,55 @@
-import bin.Button;
-import bin.Data;
-import bin.GUI;
-import bin.Pump;
+import resources.Button;
 import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import resources.Pump;
 import thread.ShutdownThread;
 
 public class Controller implements GpioPinListenerDigital {
 
-    private Thread mShutdownThread;
-    private GUI mLCDGui;
+    private ShutdownThread mShutdownThread;
+    private View mLCDView;
     private Model mModel;
     private Button mNextButton, mOkButton;
     private boolean mInventoryExists = false;
     private int mVecDrinkPos = 0;
+    private Pump mPump1, mPump2, mPump3, mPump4, mPump5;
 
     public Controller() {
-        this.mModel = new Model();
-        this.mLCDGui = new GUI();
-        this.mNextButton = new Button(this, "pin5->21, Next", RaspiPin.GPIO_21);
-        this.mShutdownThread = new Thread(
-                new ShutdownThread(
-                        new Button[]{
-                                this.mNextButton
-                        },
-                        new Pump[]{
-
-                        })
-        );
-        Runtime.getRuntime().addShutdownHook(this.mShutdownThread);
+        this.init();
         this.checkInventory();
         this.loop();
     }
 
+    private void init() {
+        this.mModel = new Model();
+        this.mLCDView = new View();
+        this.mNextButton = new Button(this, "pin5->21, Next", RaspiPin.GPIO_21);
+        this.mOkButton = new Button(this, "pin6->22, Ok", RaspiPin.GPIO_22);
+        this.mPump1 = new Pump(23);
+        this.mPump2 = new Pump(24);
+        this.mPump3 = new Pump(16);
+        this.mPump4 = new Pump(20);
+        this.mPump5 = new Pump(21);
+        this.mShutdownThread = new ShutdownThread(
+                        new Button[]{
+                                this.mNextButton,
+                                this.mOkButton
+                        },
+                        new Pump[]{
+                                this.mPump1,
+                                this.mPump2,
+                                this.mPump3,
+                                this.mPump4,
+                                this.mPump5
+                        });
+        Runtime.getRuntime().addShutdownHook(this.mShutdownThread);
+    }
+
     private void checkInventory() {
         if(this.mModel.inventoryExists()) {
-            this.mLCDGui.printMessage("Inventar gefunden !");
-            this.mLCDGui.printSubmessage("Verw.    Pruefen");
+            this.mLCDView.printMessage("Inventar gefunden !");
+            this.mLCDView.printSubmessage("Verw.    Pruefen");
             this.mInventoryExists = true;
         } else {
             this.start();
@@ -45,17 +57,21 @@ public class Controller implements GpioPinListenerDigital {
     }
 
     private void start() {
-        this.mLCDGui.printMessage("Willkommen !");
-        this.mLCDGui.printNextOkMenu();
+        this.mLCDView.printMessage("Willkommen !");
+        this.mModel.loadCustomDrinks();
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.mLCDView.printNextOkMenu();
     }
 
     private void loop() {
-        while(true) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -68,12 +84,10 @@ public class Controller implements GpioPinListenerDigital {
                 this.start();
             }
         } else if (event.getPin().getName().equals("pin5->21, Next") && event.getState().isHigh()) {
-            if(Data.CUSTOM_DRINK_MENU_VECTOR.size() > this.mVecDrinkPos) {
-                this.mLCDGui.printDrink(Data.CUSTOM_DRINK_MENU_VECTOR.get(this.mVecDrinkPos).getName());
-                this.mVecDrinkPos++;
-            } else {
-                this.mVecDrinkPos = 0;
-            }
+            this.mLCDView.printDrink(this.mModel.getNextCusctomDrink().getName());
+            this.mVecDrinkPos++;
+        } else if(event.getPin().getName().equals("pin6->22, Ok") && event.getState().isHigh()) {
+            this.mModel.startPump(this.mPump1, this.mPump2, this.mPump3, this.mPump4, this.mPump5);
         }
     }
 

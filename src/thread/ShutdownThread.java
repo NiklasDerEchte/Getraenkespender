@@ -1,9 +1,9 @@
 package thread;
 
-import bin.Button;
-import bin.Pump;
+import resources.Button;
+import resources.Pump;
 
-public class ShutdownThread implements Runnable {
+public class ShutdownThread extends Thread {
 
     private Button[] mButtons;
     private Pump[] mPumps;

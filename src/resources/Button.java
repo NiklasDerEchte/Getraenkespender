@@ -1,4 +1,4 @@
-package bin;
+package resources;
 
 import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
@@ -16,7 +16,8 @@ public class Button {
     }
 
     public void shutdown() {
-        this.mGpioPin.removeAllListeners();
-        this.mGpioController.shutdown();
+        if(this.mGpioController.isExported(this.mGpioPin)) {
+            this.mGpioController.shutdown();
+        }
     }
 }

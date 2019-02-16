@@ -1,4 +1,4 @@
-package bin;
+package resources;
 
 public class Pump {
     MyGPIO mGPIOPump;

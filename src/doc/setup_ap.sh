@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /resources/bash
 run_time=`date +%Y%m%d%H%M`
 log_file="ap_setup_log.${run_time}"
 AP_CHANNEL=1

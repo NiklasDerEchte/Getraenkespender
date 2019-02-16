@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /resources/bash
 if [ "$(id -u)" != "0" ]; then
 	echo "Please re-run as sudo."
 	exit 1
@@ -15,8 +15,8 @@ wget http://get.pi4j.com/download/pi4j-1.2-SNAPSHOT.deb
 sudo dpkg -i pi4j-1.2-SNAPSHOT.deb
 sudo rm -r pi4j-1.2-SNAPSHOT.deb
 
-sudo mv compSt /usr/bin
-sudo chmod +x /usr/bin/compSt
+sudo mv compSt /usr/resources
+sudo chmod +x /usr/resources/compSt
 
 sudo mv mysql-connector-java-8.0.13.jar mysql-connector.jar
 sudo mv mysql-connector.jar /opt

@@ -1,4 +1,6 @@
-package bin;
+package resources;
+
+import entity.CustomDrink;
 
 import java.sql.*;
 
@@ -21,6 +23,10 @@ public class DAO {
             throw new NullPointerException("Instance is null");
         }
         return DAO.instance;
+    }
+
+    public void setDelimiter (char delimiter) {
+        this.mDelimiter = delimiter;
     }
 
     public DAO(String serverName, String user, String password, String port, String databaseName) {
@@ -83,4 +89,5 @@ public class DAO {
     public boolean isConnected() {
         return this.isConnected;
     }
+
 }

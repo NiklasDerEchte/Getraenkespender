@@ -1,7 +1,7 @@
 <?php
     namespace App;
     require_once __DIR__ . "/../src/bootstrap.php";
-    require_once __DIR__ . "/../bin/Config.php";
+    require_once __DIR__ . "/../resources/Config.php";
     session_start();
 ?>
 <!DOCTYPE html>

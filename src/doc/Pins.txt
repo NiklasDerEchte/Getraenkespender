@@ -1,0 +1,7 @@
+Next Button,Pin 5, RaspiPin.GPIO_21
+OK Button, Pin 6, RaspiPin.GPIO_22
+Pump 1, Pin 23, RaspiPin.GPIO_4
+Pump 2, Pin 24, RaspiPin.GPIO_5
+Pump 3, Pin 16, RaspiPin.GPIO_27
+Pump 4, Pin 20, RaspiPin.GPIO_28
+Pump 5, Pin 21, RaspiPin.GPIO_29
