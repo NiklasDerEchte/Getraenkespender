@@ -36,10 +36,10 @@ CREATE TABLE IF NOT EXISTS Inventory(
 CREATE TABLE IF NOT EXISTS Queue(
     id int NOT NULL AUTO_INCREMENT,
     drinkFk int,
-    cusctomDrinkFk int,
+    customDrinkFk int,
     status varchar(255),
     PRIMARY KEY(id),
-    FOREIGN KEY (cusctomDrinkFk) REFERENCES CustomDrink(id),
+    FOREIGN KEY (customDrinkFk) REFERENCES CustomDrink(id),
     FOREIGN KEY (drinkFk) REFERENCES Drink(id)
 );
 

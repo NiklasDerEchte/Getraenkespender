@@ -1,29 +1,29 @@
 package resources;
 
 public class Pump {
-    MyGPIO mGPIOPump;
+
+    private MyGPIO mGPIOPump;
+    private boolean isPumpReady;
+
     public Pump(int gpioPin) {
-        this.mGPIOPump = new MyGPIO(gpioPin, MyGPIO.OUT);
+        this.mGPIOPump = new MyGPIO(gpioPin, MyGPIO.OUT, 1);
         this.mGPIOPump.export();
-        if(this.mGPIOPump.isHigh() == 1) {
-            this.mGPIOPump.setValue(MyGPIO.LOW_CODE);
-        }
+        this.isPumpReady = true;
     }
 
     public void pumpMl(float ml) {
-        float pumpRatePerSecond = 60/200;
+        this.isPumpReady = false;
+        float pumpRatePerSecond = 60f/200f;
         float pumpTime = (pumpRatePerSecond * ml) * 1000;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Pump.this.mGPIOPump.setValue(MyGPIO.HIGH_CODE);
-                try {
-                    Thread.sleep((long)pumpTime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Pump.this.mGPIOPump.setValue(MyGPIO.LOW_CODE);
-        }
+        new Thread(() -> {
+            mGPIOPump.setValue(this.mGPIOPump.invertCode(MyGPIO.HIGH_CODE));
+            try {
+                Thread.sleep((long)pumpTime);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            mGPIOPump.setValue(this.mGPIOPump.invertCode(MyGPIO.LOW_CODE));
+            this.isPumpReady = true;
         }).start();
     }
 
@@ -32,7 +32,11 @@ public class Pump {
     }
 
     public void shutdown() {
-        this.mGPIOPump.setValue(MyGPIO.LOW_CODE);
+        this.mGPIOPump.setValue(this.mGPIOPump.invertCode(MyGPIO.LOW_CODE));
         this.mGPIOPump.unexport();
+    }
+
+    public boolean isPumpReady() {
+        return isPumpReady;
     }
 }

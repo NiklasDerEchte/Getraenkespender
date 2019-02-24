@@ -66,7 +66,7 @@ public class DAO {
         if(args.length > 0) {
             char[] queryCharAr = query.toCharArray();
             String[] queryStringAr = query.split(String.valueOf(this.mDelimiter));
-            String finalQuery = null;
+            StringBuilder finalQuery = null;
             int count = 0;
 
             for(char queryChar : queryCharAr) {
@@ -75,13 +75,16 @@ public class DAO {
                 }
             }
             if(count == args.length) {
-                finalQuery = "";
+                finalQuery = new StringBuilder();
                 for(int x = 0; x < count; x++) {
-                    finalQuery = finalQuery + queryStringAr[x];
-                    finalQuery = finalQuery + args[x];
+                    finalQuery.append(queryStringAr[x]);
+                    finalQuery.append(args[x]);
+                }
+                if(queryStringAr.length > count) {
+                    finalQuery.append(queryStringAr[count]);
                 }
             }
-            return finalQuery;
+            return finalQuery.toString();
         }
         return query;
     }

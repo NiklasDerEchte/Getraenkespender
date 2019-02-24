@@ -1,31 +1,30 @@
 package thread;
 
+import com.pi4j.io.gpio.GpioController;
 import resources.Button;
 import resources.Pump;
 
 public class ShutdownThread extends Thread {
 
-    private Button[] mButtons;
+    private GpioController mGpioController;
     private Pump[] mPumps;
 
-    public ShutdownThread(Button[] buttons, Pump[] pumps) {
-        this.mButtons = buttons;
+    public ShutdownThread(GpioController gpioController, Pump[] pumps) {
+        this.mGpioController = gpioController;
         this.mPumps = pumps;
     }
 
     @Override
     public void run() {
+        super.run();
         if(this.mPumps != null) {
             for(Pump pump : this.mPumps) {
                 pump.shutdown();
             }
         }
 
-        if(this.mButtons != null) {
-            for(Button button : this.mButtons) {
-                button.shutdown();
-            }
-        }
+        this.mGpioController.removeAllListeners();
+        this.mGpioController.unexportAll();
 
         System.out.println("\n ENDE !\n");
     }

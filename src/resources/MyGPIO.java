@@ -12,57 +12,65 @@ public class MyGPIO {
 
     private String typ = "";
     private int pin = -1;
+    private int initValue;
 
     private File path;
 
     private File exportFile;
     private File unexportFile;
 
-    public MyGPIO() {
-        this.init();
-    }
-
-    public MyGPIO(int pin) {
-        this.pin = pin;
-        this.init();
-    }
-
     public MyGPIO(int pin, String typ) {
+        this(pin, typ, -1);
+    }
+
+    public MyGPIO(int pin, String typ, int initValue) {
         this.pin = pin;
         this.typ = typ;
+        this.initValue = initValue;
         this.init();
-    }
-
-    public void setPin(int pin) {
-        this.pin = pin;
-    }
-
-    public void setTyp(String typ) {
-        this.typ = typ;
     }
 
     private void init() {
-        this.path = new File("/sys/class/resources");
+        this.path = new File("/sys/class/gpio");
         this.exportFile  = new File(this.path.getAbsolutePath() + "/export");
         this.unexportFile  = new File(this.path.getAbsolutePath() + "/unexport");
     }
+
+    public int invertCode(int code) {
+        if(code == MyGPIO.HIGH_CODE) {
+            return MyGPIO.LOW_CODE;
+        } else if(code == MyGPIO.LOW_CODE) {
+            return MyGPIO.HIGH_CODE;
+        }
+        return -1;
+    }
     
     public int export() {
-        File gpioFile = new File(this.path.getAbsolutePath() + "/resources" + String.valueOf(this.pin));
+        File gpioFile = new File(this.path.getAbsolutePath() + "/gpio" + String.valueOf(this.pin));
         if(this.pin != -1 && !this.typ.trim().isEmpty() && !gpioFile.exists()) {
             try {
                 FileWriter fileWriter = new FileWriter(this.exportFile, true);
                 fileWriter.append(String.valueOf(this.pin));
                 fileWriter.flush();
                 fileWriter.close();
-                return this.writeTyp(gpioFile);
+                int ret = this.writeTyp(gpioFile);
+                this.initValue();
+                return ret;
             } catch (IOException e) {
                 return -1;
             }
         } else if (this.pin != -1 && !this.typ.trim().isEmpty() && gpioFile.exists()){
-            return this.writeTyp(gpioFile);
+            int ret = this.writeTyp(gpioFile);
+            this.initValue();
+            return ret;
         } else {
             return 0;
+        }
+    }
+
+    private void initValue() {
+        if(this.initValue == 0 || this.initValue == 1) {
+            this.setValue(this.initValue);
         }
     }
 
@@ -96,7 +104,7 @@ public class MyGPIO {
 
     public int isHigh() {
         if(this.pin != -1) {
-           File value = new File(this.path.getAbsolutePath() + "/resources" + this.pin + "/value");
+           File value = new File(this.path.getAbsolutePath() + "/gpio" + this.pin + "/value");
            try {
                BufferedReader bufferedReader = new BufferedReader(new FileReader(value));
                String code = bufferedReader.readLine();
@@ -112,7 +120,7 @@ public class MyGPIO {
 
     public int setValue(int code) {
         if(this.pin != -1) {
-            File value = new File(this.path.getAbsolutePath() + "/resources" + this.pin + "/value");
+            File value = new File(this.path.getAbsolutePath() + "/gpio" + this.pin + "/value");
             try {
                 FileWriter fileWriter = new FileWriter(value);
                 if(code == MyGPIO.HIGH_CODE || code == MyGPIO.LOW_CODE) {
