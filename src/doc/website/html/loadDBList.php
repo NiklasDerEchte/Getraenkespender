@@ -2,7 +2,7 @@
    	namespace App;
 
    	use Niklas\DAO;
-    use Web\Entity\Drink;
+    use Web\Entity\CustomDrink;
 
 	$dao = DAO::Get();
 	echo "
@@ -21,17 +21,17 @@
 
 	echo "<tbody>";
 
-	$dao->query("SELECT * FROM Drink", [])->each(
-		function(Drink $drink) {
+	$dao->query("SELECT * FROM CustomDrink", [])->each(
+		function(CustomDrink $drink) {
 			echo "
             <tr>	
                 <td>" . $drink->name . "</td>
                 <td>" . $drink->description . "</td>
-                <td>" . $drink->pos1 . "</td>
-                <td>" . $drink->pos2 . "</td>
-                <td>" . $drink->pos3 . "</td>
-                <td>" . $drink->pos4 . "</td>
-                <td>" . $drink->pos5 . "</td>
+                <td>" . $drink->volumeCl1 . "</td>
+                <td>" . $drink->volumeCl2 . "</td>
+                <td>" . $drink->volumeCl3 . "</td>
+                <td>" . $drink->volumeCl4 . "</td>
+                <td>" . $drink->volumeCl5 . "</td>
             </tr>
       	";
 		});
