@@ -1,12 +1,12 @@
 <?php
 namespace App;
 use Niklas\DAO;
-use Web\Entity\Drink;
+use Web\Entity\CustomDrink;
 
 
 if(isset($_POST['save'])) {
     $dao = DAO::Get();
-    $drink = new Drink();
+    $drink = new CustomDrink();
 
     if(isset($_POST['inputDrinkName'])) {
         $drink->name = $_POST['inputDrinkName'];
@@ -17,23 +17,23 @@ if(isset($_POST['save'])) {
     }
 
     if(isset($_POST['bottle-1'])) {
-        $drink->pos1 = $_POST['bottle-1'];
+        $drink->volumeCl1 = $_POST['bottle-1'];
     }
 
     if(isset($_POST['bottle-2'])) {
-        $drink->pos2 = $_POST['bottle-2'];
+        $drink->volumeCl2 = $_POST['bottle-2'];
     }
 
     if(isset($_POST['bottle-3'])) {
-        $drink->pos3 = $_POST['bottle-3'];
+        $drink->volumeCl3 = $_POST['bottle-3'];
     }
 
     if(isset($_POST['bottle-4'])) {
-        $drink->pos4 = $_POST['bottle-4'];
+        $drink->volumeCl4 = $_POST['bottle-4'];
     }
 
     if(isset($_POST['bottle-5'])) {
-        $drink->pos5 = $_POST['bottle-5'];
+        $drink->volumeCl5 = $_POST['bottle-5'];
     }
 
     $dao->store($drink);
