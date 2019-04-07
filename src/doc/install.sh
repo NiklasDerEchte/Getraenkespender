@@ -1,22 +1,23 @@
-#! /resources/bash
+#! /bin/bash
 if [ "$(id -u)" != "0" ]; then
 	echo "Please re-run as sudo."
 	exit 1
 fi
-apt-get update
-apt-get install -y apache2 php php-mysql composer mysql-server
-#rm -r /var/www/*
-#cp website/ /var/www/
-#cd /var/www/
-#composer install
-service apache2 restart
+sudo apt-get update
+sudo apt-get install -y apache2 php php-mysql composer mysql-server
+sudo rm -r /var/www/*
+cd website
+sudo cp -r * /var/www/
+cd /var/www/
+sudo composer install
+sudo service apache2 restart
 
 wget http://get.pi4j.com/download/pi4j-1.2-SNAPSHOT.deb
 sudo dpkg -i pi4j-1.2-SNAPSHOT.deb
 sudo rm -r pi4j-1.2-SNAPSHOT.deb
 
-sudo mv compSt /usr/resources
-sudo chmod +x /usr/resources/compSt
+sudo mv compSt /usr/bin
+sudo chmod +x /usr/bin/compSt
 
 sudo mv mysql-connector-java-8.0.13.jar mysql-connector.jar
 sudo mv mysql-connector.jar /opt
@@ -27,7 +28,7 @@ sudo printf "dtparam=i2c_arm=on\n" >> /boot/config.txt
 chmod +x setup_ap.sh
 ./setup_ap.sh
 
-echo "Beliebige Taste drücken:"
+echo "Beliebige Taste drücken zum neustarten:"
 read -n1 -s
 sudo reboot
 

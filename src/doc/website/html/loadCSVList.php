@@ -1,6 +1,6 @@
 <?php
     require_once __DIR__ . "/../src/bootstrap.php";
-    require_once __DIR__ . "/../resources/Config.php";
+    require_once __DIR__ . "/../bin/Config.php";
 
     $csvFile = fopen(Config::$CSV_PATH, 'r');
 	$line = fgetcsv($csvFile); //table header

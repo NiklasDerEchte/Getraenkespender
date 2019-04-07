@@ -11,5 +11,5 @@ use Niklas\DAO;
 
 ini_set("display_errors",1);
 require_once __DIR__ . "/../vendor/autoload.php";
-require_once __DIR__ . "/../resources/Config.php";
+require_once __DIR__ . "/../bin/Config.php";
 DAO::Init(new \Niklas\DAO(Config::$HOST, Config::$USER, CONFIG::$PASS, CONFIG::$DB));

@@ -5,7 +5,7 @@
  * Date: 04.09.18
  * Time: 15:35
  */
-    require_once __DIR__ . "/../../resources/Config.php";
+    require_once __DIR__ . "/../../bin/Config.php";
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="#"><?php echo \App\Config::$NAVBAR_TITLE; ?></a>

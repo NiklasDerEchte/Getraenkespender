@@ -1,4 +1,4 @@
-#! /resources/bash
+#! /bin/bash
 run_time=`date +%Y%m%d%H%M`
 log_file="ap_setup_log.${run_time}"
 AP_CHANNEL=1
@@ -30,7 +30,6 @@ elif [ ${NONIC} -gt 1 ]; then
                 NIC=${INTERFACE}
 		break
         done
-        exit 1
 else
         NIC=`netstat -i | grep ^wlan | cut -d ' ' -f 1`
 fi
@@ -80,9 +79,9 @@ echo "Setting up  $NIC"
 
 echo "Downloading and installing packages: hostapd isc-dhcp-server iptables."                           | tee -a ${log_file}
 echo ""
-apt-get -y install hostapd isc-dhcp-server iptables                                                     | tee -a ${log_file} 
-service hostapd stop | tee -a ${log_file} > /dev/null
-service isc-dhcp-server stop  | tee -a ${log_file}  > /dev/null
+sudo apt-get -y install hostapd isc-dhcp-server iptables                                                     | tee -a ${log_file}
+sudo service hostapd stop | tee -a ${log_file} > /dev/null
+sudo service isc-dhcp-server stop  | tee -a ${log_file}  > /dev/null
 echo ""                                                                                                 | tee -a ${log_file} 
 
 echo "Backups:"                                                                                         | tee -a ${log_file}
@@ -180,6 +179,9 @@ echo "up iptables-restore < /etc/iptables.ipv4.nat"      >> /etc/network/interfa
 
 ifdown ${NIC}                                                                                    | tee -a ${log_file}
 ifup ${NIC}                                                                                      | tee -a ${log_file}
+sudo systemctl unmask hostapd
+sudo systemctl enable hostapd
+sudo systemctl start hostapd
 service hostapd start                                                                          | tee -a ${log_file}
 service isc-dhcp-server start                                                                  | tee -a ${log_file}
 
@@ -188,15 +190,13 @@ read -n 1 -p "Would you like to start AP on boot? (y/n): " startup_answer
 echo ""
 if [ ${startup_answer,,} = "y" ]; then
         echo "Configure: startup"                                                              | tee -a ${log_file}
-        update-rc.d hostapd enable                                                             | tee -a ${log_file}
-        update-rc.d isc-dhcp-server enable                                                     | tee -a ${log_file}
+        sudo update-rc.d hostapd enable                                                             | tee -a ${log_file}
+        sudo update-rc.d isc-dhcp-server enable                                                     | tee -a ${log_file}
 else
         echo "In case you change your mind, please run below commands if you want AP to start on boot:"                       | tee -a ${log_file}
         echo "update-rc.d hostapd enable"                                                      | tee -a ${log_file}
         echo "update-rc.d isc-dhcp-server enable"                                              | tee -a ${log_file}
 fi
-
-
 
 echo ""                                                                                        | tee -a ${log_file}
 echo "Do not worry if you see something like: [FAIL] Starting ISC DHCP server above... this is normal :)"               | tee -a ${log_file}

@@ -13,8 +13,8 @@ public class Pump {
 
     public void pumpMl(float ml) {
         this.isPumpReady = false;
-        float pumpRatePerSecond = 60f/200f;
-        float pumpTime = (pumpRatePerSecond * ml) * 1000;
+        float pumpRatePerSecond = 50f/60f;
+        float pumpTime = (ml / pumpRatePerSecond) * 1000;
         new Thread(() -> {
             mGPIOPump.setValue(this.mGPIOPump.invertCode(MyGPIO.HIGH_CODE));
             try {
