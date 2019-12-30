@@ -2,7 +2,6 @@ package resources;
 
 import entity.CustomDrink;
 import entity.Queue;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

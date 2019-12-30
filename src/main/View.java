@@ -22,6 +22,19 @@ public class View {
         }
     }
 
+    public void clearScreen() {
+        if(this.mLCD1602 != null) {
+            try {
+                this.mLCD1602.setCursorPosition(0,0);
+                this.mLCD1602.print("                ");
+                this.mLCD1602.setCursorPosition(0,1);
+                this.mLCD1602.print("                ");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void printMessage(String text) {
         if(this.mLCD1602 != null) {
             try {
